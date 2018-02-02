@@ -1,0 +1,61 @@
+package WordTris.ScoreAndStoreEliminatedTrisHelper;
+
+import java.util.ArrayList;
+
+import WordTris.Resource.resourceSetting;
+import game.GameConsole;
+import java.awt.Color;
+
+public class ScoreAndStoreEliminatedTrisHelper {
+	private ScoreHelper score = new ScoreHelper();
+	private StoreEliminatedTrisHelper storeEliminatedTris = new StoreEliminatedTrisHelper();
+
+	public void Add(String input) {
+		storeEliminatedTris.Add(input);
+		score.AddScore(input.length());
+	}
+
+	public void Display() {
+		score.Display();
+		storeEliminatedTris.Display();
+	}
+
+	private class StoreEliminatedTrisHelper {
+		private int displayXStart = resourceSetting.storeEliminatedTrisX;
+		private int displayY = resourceSetting.storeEliminatedTrisY;
+		private int displayInterval = resourceSetting.storeEliminatedTrisInterval;
+		private ArrayList<String> resultstore = new ArrayList<String>();
+
+		private void UpdateResult() {
+			if (resultstore.size() > 5) {
+				resultstore.remove(0);
+			}
+		}
+
+		public void Add(String input) {
+			resultstore.add(input);
+			UpdateResult();
+		}
+
+		public void Display() {
+			for (int i = resultstore.size() - 1; i >= 0; i--) {
+				GameConsole.getInstance().drawText(displayXStart, displayY + (i * displayInterval) + displayInterval,
+						"[" + resultstore.get(i) + "]", resourceSetting.font, Color.darkGray);
+			}
+		}
+	}
+
+	private class ScoreHelper {
+		private int score = 0;
+		private int diaplyX = resourceSetting.scoreDisplayX;
+		private int diaplyY = resourceSetting.scoreDisplayY;
+
+		public void AddScore(int addScore) {
+			score += addScore;
+		}
+
+		public void Display() {
+			GameConsole.getInstance().drawText(diaplyX, diaplyY, "Score:" + this.score);
+		}
+	}
+}

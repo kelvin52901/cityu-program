@@ -1,0 +1,20 @@
+package WordTris.menu;
+
+import WordTris.Key.Key;
+import WordTris.Resource.resourceSetting;
+import WordTris.Timer.Timmer;
+import java.awt.Color;
+import java.awt.Font;
+
+public class Stop extends Menu {
+	Key pressedKey = new Key();
+
+	public void render() {
+		super.render();
+		Timmer.stop();
+		gc.clear();
+		gc.drawRectangle(gamew / 2, 150, 100, 50, Color.yellow);
+		gc.drawText(gamew / 2 + 5, ((150 + 200) / 2), "Resume", new Font("Helvetica", Font.BOLD, 40), Color.BLUE);
+		gc.update();
+	}
+}
